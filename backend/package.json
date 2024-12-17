@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "fix" : "eslint --fix .",
+    "fix": "eslint --fix .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
