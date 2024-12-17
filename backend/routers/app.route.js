@@ -3,7 +3,7 @@ const { createProduct,getAllProducts,getProductById,updateProduct,deleteProduct}
 
 const router = express.Router();
 const { z } = require("zod");
-const { Product } = require("../config/db"); //Product is the mongoose model exported from db
+const { Product } = require("../config/db");
 
 router.get("/product",getAllProducts);
 router.post("/product",createProduct);
