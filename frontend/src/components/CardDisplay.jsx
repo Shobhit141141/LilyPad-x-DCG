@@ -8,7 +8,7 @@ const CardDisplay = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5002/api/data'); 
+        const response = await axios.get('http://localhost:5000/api/product'); 
         setData(response.data);
       } catch (err) {
         setError('Failed to fetch data from the server.');
