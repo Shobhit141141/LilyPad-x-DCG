@@ -1,5 +1,6 @@
 import React from 'react';
 import DynamicForm from './components/dynamicForm';
+import CardDisplay from './components/CardDisplay';
 
 
 const App = () => {
@@ -10,6 +11,7 @@ const App = () => {
           Lilypad: Find your vehicle
         </h1>
         <DynamicForm />
+        <CardDisplay />
       </div>
     </div>
   );

@@ -27,11 +27,7 @@ const validationSchema = Yup.object(
 
 const DynamicForm = () => {
   const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm({
+    register, handleSubmit, control, formState: { errors }} = useForm({
     resolver: yupResolver(validationSchema),
   });
 
