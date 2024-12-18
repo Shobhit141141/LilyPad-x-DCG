@@ -55,8 +55,6 @@ const productSchema = new mongoose.Schema({
   price: { type: Number, required: true }, 
   discount_price: { type: Number }, 
   tax_rate: { type: Number }, 
-
-  
   stock_quantity: { type: Number, required: true }, 
   stock_status: { 
     type: String, 
