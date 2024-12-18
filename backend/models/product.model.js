@@ -26,15 +26,18 @@ const predefinedSpecifications = {
 };
 
 const productSchema = new mongoose.Schema({
+  // compulsory fields
   name: { type: String, required: true }, 
   sku: { type: String, unique: true }, 
   brand: { type: String }, 
   short_description: { type: String }, 
   long_description: { type: String, required: true }, 
+
+  // reference fields
   category_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true }, 
   category_name: { type: String, required: true }, 
   
-  
+  // conditional fields
   technical_specifications: [
     {
       attribute_name: { type: String, required: true }, 
@@ -48,7 +51,7 @@ const productSchema = new mongoose.Schema({
     }
   ],
 
-  
+  // compulsory fields
   price: { type: Number, required: true }, 
   discount_price: { type: Number }, 
   tax_rate: { type: Number }, 
