@@ -11,7 +11,7 @@ const App = () => {
           LilyPad: Find your vehicle
         </h1>
         <DynamicForm />
-        {/* <CardDisplay /> */}
+        <CardDisplay />
       </div>
     </div>
   );

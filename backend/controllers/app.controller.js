@@ -7,13 +7,21 @@ const productValidationSchema = z.object({
   brand: z.string().optional(),
   short_description: z.string().optional(),
   long_description: z.string().min(1, "Long description is required"),
-  category_id: z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid category ID"),
-  category_name: z.enum(["EV Bikes/Scooters", "Accessories"], "Invalid category name"),
+  category_name: z.enum(
+    ["EV Bikes/Scooters", "Accessories"],
+    "Invalid category name"
+  ),
   technical_specifications: z
     .array(
       z.object({
         attribute_name: z.string(),
-        attribute_type: z.enum(["text", "number", "dropdown", "textarea", "richtext"]),
+        attribute_type: z.enum([
+          "text",
+          "number",
+          "dropdown",
+          "textarea",
+          "richtext",
+        ]),
         attribute_value: z.union([z.string(), z.number()]),
         unit: z.string().optional(),
       })
@@ -30,10 +38,17 @@ const productValidationSchema = z.object({
 const createProduct = async (req, res) => {
   try {
     const validatedData = productValidationSchema.parse(req.body);
+    const existingProduct = await Product.findOne({ sku: validatedData.sku });
+    if (existingProduct) {
+      return res.status(400).json({ message: "SKU must be unique" });
+    }
     if (!validatedData.technical_specifications) {
-      const specifications = predefinedSpecifications[validatedData.category_name];
+      const specifications =
+        predefinedSpecifications[validatedData.category_name];
       if (!specifications) {
-        return res.status(400).json({ message: "No predefined specifications for this category" });
+        return res
+          .status(400)
+          .json({ message: "No predefined specifications for this category" });
       }
       validatedData.technical_specifications = specifications.map((spec) => ({
         attribute_name: spec.attribute_name,
@@ -47,10 +62,12 @@ const createProduct = async (req, res) => {
     res.status(201).json({ message: "Product added successfully", newProduct });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return res.status(400).json({ message: "Validation Error", errors: error.errors });
+      return res
+        .status(400)
+        .json({ message: "Validation Error", errors: error.errors });
     }
     console.error("Error:", error.message);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Internal server error " });
   }
 };
 
@@ -59,7 +76,9 @@ const getAllProducts = async (_req, res) => {
     const products = await Product.find();
     res.status(200).json(products);
   } catch (error) {
-    res.status(500).json({ message: "Failed to fetch products", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to fetch products", error: error.message });
   }
 };
 
@@ -71,19 +90,25 @@ const getProductById = async (req, res) => {
     }
     res.status(200).json(product);
   } catch (error) {
-    res.status(500).json({ message: "Failed to fetch product", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to fetch product", error: error.message });
   }
 };
 
 const updateProduct = async (req, res) => {
   try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
     res.status(200).json({ message: "Product updated successfully", product });
   } catch (error) {
-    res.status(500).json({ message: "Failed to update product", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to update product", error: error.message });
   }
 };
 
@@ -95,7 +120,9 @@ const deleteProduct = async (req, res) => {
     }
     res.status(200).json({ message: "Product deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Failed to delete product", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to delete product", error: error.message });
   }
 };
 

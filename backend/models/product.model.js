@@ -34,7 +34,6 @@ const productSchema = new mongoose.Schema({
   long_description: { type: String, required: true }, 
 
   // reference fields
-  category_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true }, 
   category_name: { type: String, required: true }, 
   
   // conditional fields
