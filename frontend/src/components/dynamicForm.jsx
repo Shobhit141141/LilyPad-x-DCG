@@ -84,8 +84,8 @@ const App = () => {
         attribute_type: spec.attribute_type,
         attribute_value: "",
         required: spec.required,
-        options: spec.options, // Add options to the specifications
-        unit: spec.unit // Add unit to the specifications
+        options: spec.options, 
+        unit: spec.unit
       }))
     });
     
@@ -132,12 +132,10 @@ const App = () => {
       validationErrors.low_stock_alert_threshold = "Alert threshold must be less than stock quantity";
     }
 
-    // Category validation
     if (!formData.category_name) {
       validationErrors.category_name = "Category is required";
     }
 
-    // Technical specifications validation
     formData.technical_specifications.forEach((spec, index) => {
       if (spec.required && !spec.attribute_value.toString().trim()) {
         validationErrors[`spec_${index}`] = `${spec.attribute_name} is required`;
@@ -165,6 +163,22 @@ const App = () => {
       };
 
       const response = await axios.post("http://localhost:5000/api/product", formattedData);
+      setFormData({
+        name: "",
+        sku: "",
+        brand: "",
+        short_description: "",
+        long_description: "",
+        category_name: "",
+        price: "",
+        discount_price: "",
+        tax_rate: "",
+        stock_quantity: "",
+        stock_status: "In Stock",
+        low_stock_alert_threshold: "",
+        technical_specifications: [],
+      });
+      setErrors({});
       
     } catch (error) {
       console.error("Error:", error);
