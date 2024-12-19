@@ -16,7 +16,7 @@ const formFields = [
     type: "select",
     label: "Brand",
     name: "brand",
-    options: ["2 Wheeler", "3 Wheeler", "4 Wheeler"],
+    options: ["Brand 1", "Brand 2", "Brand 3"],
     required: false,
   },
   {
@@ -34,6 +34,25 @@ const formFields = [
 ];
 
 const categories = ["EV Bikes/Scooters", "Accessories"];
+
+const fixedFields = {
+    "EV Bikes/Scooters": [
+        { type: "number", label: "Price", name: "price", required: true },
+        { type: "number", label: "Discount Price", name: "discount_price", required: false },
+        { type: "number", label: "Tax Rate", name: "tax_rate", required: false },
+        { type: "number", label: "Stock Quantity", name: "stock_quantity", required: true },
+        { type: "text", label: "Stock Status", name: "stock_status", required: false, options: ['In Stock', 'Out of Stock', 'Pre-Order'], default: "In Stock" },
+        { type: "number", label: "Low stock Alert", name: "low_stock_alert_threshold", required: false },
+    ],
+    Accessories: [
+        { type: "number", label: "Price", name: "price", required: true, },
+        { type: "number", label: "Discount Price", name: "discount_price", required: false },
+        { type: "number", label: "Tax Rate", name: "tax_rate", required: false },
+        { type: "number", label: "Stock Quantity", name: "stock_quantity", required: true },
+        { type: "text", label: "Stock Status", name: "stock_status", required: false, options: ['In Stock', 'Out of Stock', 'Pre-Order'], default: "In Stock" },
+        { type: "number", label: "Low stock Alert", name: "low_stock_alert_threshold", required: false },
+    ],
+}
 
 const predefinedSpecifications = {
   "EV Bikes/Scooters": [
@@ -89,7 +108,8 @@ const DynamicForm = () => {
   useEffect(() => {
     if (selectedCategory) {
       const categoryFields = predefinedSpecifications[selectedCategory] || [];
-      setDynamicFields([...formFields, ...categoryFields]);
+      const fixedCategoryFields = fixedFields[selectedCategory] || [];
+      setDynamicFields([...formFields, ...categoryFields, ...fixedCategoryFields,]);
     } else {
       setDynamicFields(formFields);
     }
@@ -139,12 +159,12 @@ const DynamicForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="p-6">
       <div className="mb-4">
-        <label htmlFor="category" className="block text-gray-700">
+        <label htmlFor="category" className="block text-gray-700 ">
           Select Category
         </label>
         <select
+          className="border rounded p-2 w-full bg-gray-50 text-gray-700 hover:border-blue-500 focus:ring-2 focus:ring-blue-500 transition duration-200"
           id="category"
-          className="border rounded p-2 w-full"
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
         >
@@ -159,6 +179,7 @@ const DynamicForm = () => {
 
       {dynamicFields.map((field, index) => {
         const fieldName = field.name || field.attribute_name;
+
 
         switch (field.type || field.attribute_type) {
           case "text":
