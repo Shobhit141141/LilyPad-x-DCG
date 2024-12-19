@@ -1,6 +1,8 @@
 import React from 'react';
 import DynamicForm from './components/dynamicForm';
 import CardDisplay from './components/CardDisplay';
+import { Toaster } from 'react-hot-toast';
+
 
 
 const App = () => {
@@ -10,6 +12,7 @@ const App = () => {
         <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">
           LilyPad: Find your vehicle
         </h1>
+        <Toaster />
         <DynamicForm />
         <CardDisplay />
       </div>

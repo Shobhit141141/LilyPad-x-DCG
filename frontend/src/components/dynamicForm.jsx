@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import RichTextEditor from "./RichTextEditor";
+import toast from 'react-hot-toast';
 
 // Predefined specifications for the categories
 const predefinedSpecifications = {
@@ -28,13 +29,13 @@ const predefinedSpecifications = {
       attribute_name: "Top Speed",
       attribute_type: "number",
       unit: "km/h",
-      required: false,
+      required: true,
     },
     {
       attribute_name: "Performance",
       attribute_type: "dropdown",
       options: ["High", "Medium", "Low"],
-      required: false,
+      required: true,
     },
   ],
   Accessories: [
@@ -44,9 +45,9 @@ const predefinedSpecifications = {
       attribute_name: "Material",
       attribute_type: "dropdown",
       options: ["Aluminum Alloy", "Plastic", "Steel"],
-      required: false,
+      required: true,
     },
-    { attribute_name: "Overview", attribute_type: "textarea", required: false },
+    { attribute_name: "Overview", attribute_type: "textarea", required: true },
   ],
 };
 
@@ -118,9 +119,12 @@ const App = () => {
     if (!formData.name.trim()) validationErrors.name = "Name is required";
     if (!formData.sku.trim()) validationErrors.sku = "SKU is required";
     if (!formData.long_description.trim()) validationErrors.long_description = "Description is required";
+    if (!formData.brand.trim()) validationErrors.brand = "Brand is required";
+    if (!formData.short_description.trim()) validationErrors.short_description = "Short Description is required";
     
     const price = parseFloat(formData.price);
     if (isNaN(price) || price <= 0) validationErrors.price = "Price must be greater than 0";
+    if (!formData.discount_price.trim()) validationErrors.discount_price = "Discounted Price is required";
     
     const tax_rate = parseFloat(formData.tax_rate);
     if (isNaN(tax_rate) || tax_rate < 0 || tax_rate > 100) validationErrors.tax_rate = "Tax rate must be between 0 and 100";
@@ -128,7 +132,7 @@ const App = () => {
     if (isNaN(stockQuantity) || stockQuantity < 0) validationErrors.stock_quantity = "Stock quantity must be 0 or greater";
     
     const threshold = parseInt(formData.low_stock_alert_threshold);
-    if (threshold && (isNaN(threshold) || threshold >= stockQuantity)) {
+    if ((isNaN(threshold) || threshold >= stockQuantity)) {
       validationErrors.low_stock_alert_threshold = "Alert threshold must be less than stock quantity";
     }
 
@@ -163,6 +167,9 @@ const App = () => {
       };
 
       const response = await axios.post("http://localhost:5000/api/product", formattedData);
+
+      toast.success("Form submitted successfully!");
+
       setFormData({
         name: "",
         sku: "",
@@ -224,6 +231,7 @@ const App = () => {
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
           />
+          {errors.brand && <p className="text-red-500 text-sm mt-1">{errors.brand}</p>}
         </div>
 
         <div>
@@ -235,6 +243,7 @@ const App = () => {
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded"
           />
+          {errors.short_description && <p className="text-red-500 text-sm mt-1">{errors.short_description}</p>}
         </div>
 
         {/* <div>
@@ -286,6 +295,7 @@ const App = () => {
               step="0.01"
               className="w-full p-2 border border-gray-300 rounded"
             />
+            {errors.discount_price && <p className="text-red-500 text-sm mt-1">{errors.discount_price}</p>}
           </div>
 
           <div>
@@ -332,6 +342,7 @@ const App = () => {
               <option value="Out of Stock">Out of Stock</option>
               <option value="Pre-Order">Pre-Order</option>
             </select>
+            {errors.stock_status && <p className="text-red-500 text-sm mt-1">{errors.stock_status}</p>}
           </div>
 
           <div>
