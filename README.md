@@ -45,10 +45,6 @@ This project is a dynamic web application for **Lilypad**, a company specializin
 ## Installation
 
 1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/your-username/lilypad-ev-product-management.git
-   cd lilypad-ev-product-management
-   ```
 
 2. **Install Dependencies**
    - Navigate to the `frontend` and `backend` directories separately and install the dependencies.
