@@ -44,20 +44,28 @@ This project is a dynamic web application for **Lilypad**, a company specializin
 
 ## Installation
 
-1. **Clone the Repository**
+1) Navigate to backend adn run the server
 
-2. **Install Dependencies**
-   - Navigate to the `frontend` and `backend` directories separately and install the dependencies.
+```bash
+  cd backend
+  npm install 
+  npm run dev
+```
+2) Setup environment variables
+```bash
+  MONGO_URI = your_mongo_uri
+  PORT = 5000
+```
+
+3) Navigate to frontend and run the client
+
+```bash
+  cd frotnend
+  npm install 
+  npm run dev
+```
 
 
-3. **Environment Variables**
-   - Create a `.env` file in the `backend` directory and configure the following:
-
-4. **Run the Application**
-   - Start the backend server:
-
-   - Start the frontend development server:
-  
 
 ---
 
@@ -66,7 +74,6 @@ This project is a dynamic web application for **Lilypad**, a company specializin
 1. Navigate to the website.
 2. Add a new product by filling out the dynamic input form.
 3. View the list of products dynamically fetched from the database.
-4. Update or delete product information as needed.
 
 ---
 
@@ -97,6 +104,7 @@ The backend API exposes the following endpoints:
 ```
 root
 ├── backend
+│   ├── config
 │   ├── controllers
 │   ├── models
 │   ├── routes
@@ -106,16 +114,12 @@ root
 │   ├── public
 │   ├── src
 │   │   ├── components
-│   │   ├── pages
 │   │   ├── App.js
-│   │   ├── index.js
+│   │   ├── index.css
+│   │   ├── main.jsx
 ├── README.md
 ```
 
 ---
 
-
-### Acknowledgments
-
-Special thanks to the Lilypad team for providing the opportunity to build this project. 🚀
 
