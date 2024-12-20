@@ -107,7 +107,7 @@ root
 │   ├── config
 │   ├── controllers
 │   ├── models
-│   ├── routes
+│   ├── routers
 │   ├── .env
 │   ├── index.js
 ├── frontend
