@@ -56,10 +56,6 @@ This project is a dynamic web application for **Lilypad**, a company specializin
 
 3. **Environment Variables**
    - Create a `.env` file in the `backend` directory and configure the following:
-     ```env
-     MONGO_URI=<your-mongodb-connection-string>
-     PORT=5001
-     ```
 
 4. **Run the Application**
    - Start the backend server:
